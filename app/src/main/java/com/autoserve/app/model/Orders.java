@@ -1,5 +1,5 @@
 package com.autoserve.app.model;
 
-public class Order {
+public class Orders {
 
 }

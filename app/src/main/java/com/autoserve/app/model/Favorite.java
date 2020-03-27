@@ -1,47 +1,50 @@
 package com.autoserve.app.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.autoserve.app.enums.Active;
 
-
 @Entity
-public class Tables extends AuditModel{
+public class Favorite extends AuditModel{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	// 0 for Ground, 1 for 1st floor, ...
-	@NotNull
-	@Column
-	private Integer floor;
+	@OneToOne
+	@JoinColumn(nullable=true)
+	private Item item;
 	
-	@NotNull
-	@Column
-	private Integer tableNo;
+	@OneToOne
+	@JoinColumn(nullable=true)
+	private Deal deal;
 	
-	@ManyToOne
+	@OneToOne
+	@JoinColumn(nullable=false)
+	private User user;
+	
+	@OneToOne
+	@JoinColumn(nullable=false)
 	private Restaurant restaurant;
 	
 	@Enumerated(EnumType.STRING)
 	private Active active;
 	
-	public Tables() { }
+	public Favorite() { }
 
-	public Tables(Long id, @NotNull Integer floor, @NotNull Integer tableNo, Restaurant restaurant, Active active) {
+	public Favorite(Long id, Item item, Deal deal, User user, Restaurant restaurant, Active active) {
 		super();
 		this.id = id;
-		this.floor = floor;
-		this.tableNo = tableNo;
+		this.item = item;
+		this.deal = deal;
+		this.user = user;
 		this.restaurant = restaurant;
 		this.active = active;
 	}
@@ -54,20 +57,28 @@ public class Tables extends AuditModel{
 		this.id = id;
 	}
 
-	public Integer getFloor() {
-		return floor;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setFloor(Integer floor) {
-		this.floor = floor;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
-	public Integer getTableNo() {
-		return tableNo;
+	public Deal getDeal() {
+		return deal;
 	}
 
-	public void setTableNo(Integer tableNo) {
-		this.tableNo = tableNo;
+	public void setDeal(Deal deal) {
+		this.deal = deal;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Restaurant getRestaurant() {
